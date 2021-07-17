@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
     
     private let passwordField: UITextField = {
         let field = UITextField()
-        field.placeholder = "Passowrd"
+        field.placeholder = "Password"
         field.isSecureTextEntry = true
         field.returnKeyType = .continue
         field.leftViewMode = .always
