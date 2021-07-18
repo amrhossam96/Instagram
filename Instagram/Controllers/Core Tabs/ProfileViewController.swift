@@ -41,6 +41,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView?.frame = view.bounds
+        collectionView?.backgroundColor = .systemBackground
     }
     
     
@@ -49,6 +50,7 @@ final class ProfileViewController: UIViewController {
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapSettingsButton))
+        navigationItem.rightBarButtonItem?.tintColor = .label
     }
     
     
