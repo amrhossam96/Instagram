@@ -8,6 +8,8 @@
 import UIKit
 import SafariServices
 
+import FirebaseAuth
+
 class LoginViewController: UIViewController {
     
     struct Constants {
@@ -94,6 +96,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         addSubViews()
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
@@ -200,8 +204,35 @@ class LoginViewController: UIViewController {
             return
         }
         
+        var username: String?
+        var email: String?
+        
+        if usernameEmail.contains("@"), usernameEmail.contains(".") {
+            // email
+            email = usernameEmail
+        } else {
+            // username
+            username = usernameEmail
+        }
         // login function
-        print("Login")
+        AuthManager.shared.loginUser(username: username, email: email, password: password) { success in
+            DispatchQueue.main.async {
+                if success {
+                    // user logged in
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    // error occured
+                    let alert = UIAlertController(title: "Login Error",
+                                                  message: "We're unable to login",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss",
+                                                  style: .cancel,
+                                                  handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+            
+        }
         
         
         
@@ -227,12 +258,14 @@ class LoginViewController: UIViewController {
     
     @objc private func didTapCreateAccountButton(){
         let vc = RegistrationViewController()
-        present(vc, animated: true)
+        vc.title = "Create an Account"
+        present(UINavigationController(rootViewController: vc), animated: true)
     }
 }
 
 
 // MARK:- UITextFieldDelegates
+
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
