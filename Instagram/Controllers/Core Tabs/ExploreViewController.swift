@@ -28,6 +28,7 @@ class ExploreViewController: UIViewController {
         layout.minimumLineSpacing = 1
         layout.minimumInteritemSpacing = 1
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: view.width/3 - 1, height: view.width/3 - 1)
         collectionView = UICollectionView(frame: .zero,
                                           collectionViewLayout: layout)
@@ -51,7 +52,7 @@ class ExploreViewController: UIViewController {
 
 extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return 80
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

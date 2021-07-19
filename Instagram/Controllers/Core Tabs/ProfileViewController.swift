@@ -47,7 +47,7 @@ final class ProfileViewController: UIViewController {
     
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
-                                                            style: .done,
+                                                            style: .plain,
                                                             target: self,
                                                             action: #selector(didTapSettingsButton))
         navigationItem.rightBarButtonItem?.tintColor = .label
