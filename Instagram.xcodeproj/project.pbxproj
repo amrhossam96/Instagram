@@ -45,6 +45,8 @@
 		0AB85E7126A0146B00E4D3D4 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E7026A0146B00E4D3D4 /* AuthManager.swift */; };
 		0AB85E7326A014D200E4D3D4 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E7226A014D200E4D3D4 /* StorageManager.swift */; };
 		0AB85E7526A1528600E4D3D4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E7426A1528600E4D3D4 /* Extensions.swift */; };
+		0ABD9FAC26B6525D00331E41 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0ABD9FAB26B6525D00331E41 /* SDWebImage */; };
+		0ABD9FAE26B658CA00331E41 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABD9FAD26B658CA00331E41 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +85,7 @@
 		0AB85E7026A0146B00E4D3D4 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0AB85E7226A014D200E4D3D4 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		0AB85E7426A1528600E4D3D4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0ABD9FAD26B658CA00331E41 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABD9FAC26B6525D00331E41 /* SDWebImage in Frameworks */,
 				0AB85E6C26A007A600E4D3D4 /* FirebaseDatabase in Frameworks */,
 				0AB85E6426A007A600E4D3D4 /* FirebaseAnalytics in Frameworks */,
 				0AB85E6626A007A600E4D3D4 /* FirebaseCrashlytics in Frameworks */,
@@ -183,6 +187,7 @@
 		0AB85E3E269FF0AD00E4D3D4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0ABD9FAD26B658CA00331E41 /* Models.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				0AB85E6726A007A600E4D3D4 /* FirebaseStorage */,
 				0AB85E6926A007A600E4D3D4 /* FirebaseAuth */,
 				0AB85E6B26A007A600E4D3D4 /* FirebaseDatabase */,
+				0ABD9FAB26B6525D00331E41 /* SDWebImage */,
 			);
 			productName = Instagram;
 			productReference = 0AB85E25269FF05000E4D3D4 /* Instagram.app */;
@@ -306,6 +312,7 @@
 			mainGroup = 0AB85E1C269FF05000E4D3D4;
 			packageReferences = (
 				0AB85E6226A007A600E4D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0ABD9FAA26B6525D00331E41 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 0AB85E26269FF05000E4D3D4 /* Products */;
 			projectDirPath = "";
@@ -344,6 +351,7 @@
 				0A479B4426A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift in Sources */,
 				0AB85E5D269FF3D500E4D3D4 /* PostEditorViewController.swift in Sources */,
 				0AB85E7326A014D200E4D3D4 /* StorageManager.swift in Sources */,
+				0ABD9FAE26B658CA00331E41 /* Models.swift in Sources */,
 				0A479B4A26A9667900A8FE61 /* FormTableViewCell.swift in Sources */,
 				0AB85E51269FF31400E4D3D4 /* PostViewController.swift in Sources */,
 				0A479B5126AAB3DE00A8FE61 /* ProfileTabsCollectionReusableView.swift in Sources */,
@@ -575,6 +583,14 @@
 				minimumVersion = 8.3.1;
 			};
 		};
+		0ABD9FAA26B6525D00331E41 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -602,6 +618,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AB85E6226A007A600E4D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		0ABD9FAB26B6525D00331E41 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0ABD9FAA26B6525D00331E41 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
