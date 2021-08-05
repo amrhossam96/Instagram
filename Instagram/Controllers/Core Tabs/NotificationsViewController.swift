@@ -77,7 +77,8 @@ final class NotificationsViewController: UIViewController {
                                 likeCount: [],
                                 comments: [],
                                 createdDate: Date(),
-                                taggedUsers: [user,user,user])
+                                taggedUsers: [user,user,user],
+                                owner: user)
             
             let model = UserNotification(type: x % 2 == 0 ? .like(post: post):.follow(state: .not_following),
                                              text: "Hello world",
@@ -151,7 +152,20 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension NotificationsViewController: NotificationLikeEventTableViewCellDelegate {
     func didTapRelatedPostButton(model: UserNotification) {
-        print("tapped post")
+        
+        switch model.type {
+        case .like(let post):
+            let vc = PostViewController(model: post)
+            vc.title = post.postType.rawValue
+            vc.navigationItem.largeTitleDisplayMode = .never
+            
+            navigationController?.pushViewController(vc, animated: true)
+        case .follow(state: _):
+            fatalError("Dev Error: Should never get called")
+        
+        }
+        
+        
     }
     
     

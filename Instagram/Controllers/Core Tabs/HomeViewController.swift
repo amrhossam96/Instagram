@@ -8,7 +8,17 @@
 import UIKit
 import FirebaseAuth
 
+//struct HomeFeedRenderViewModel {
+//    let header: PostRenderViewModel
+//    let post: PostRenderViewModel
+//    let actions: PostRenderViewModel
+//    let comments: PostRenderViewModel
+//}
+
 class HomeViewController: UIViewController {
+    
+    
+    private var feedRenderModels = [PostRenderViewModel]()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
