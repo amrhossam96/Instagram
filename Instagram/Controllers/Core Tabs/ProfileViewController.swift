@@ -104,6 +104,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         vc.title = "Post"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
+        let model = userPosts[indexPath.row]
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

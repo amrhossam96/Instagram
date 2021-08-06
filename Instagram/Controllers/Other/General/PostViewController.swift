@@ -19,6 +19,8 @@ import UIKit
  
  */
 
+// we use enums instead of creating a whole new type. it gives us to create types without a real structure
+
 enum PostRenderType {
     case header(provider: User)
     case primaryContent(provider: UserPost)
@@ -36,7 +38,7 @@ struct PostRenderViewModel {
 class PostViewController: UIViewController {
     
     private let model: UserPost?
-    private var renderedModels = [HomeFeedRenderViewModel]()
+    private var renderedModels = [PostRenderViewModel]()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -66,6 +68,7 @@ class PostViewController: UIViewController {
         guard let userPostModel = model else {
             return
         }
+        // This is the renderer that will render the cells of the feed (Post)
         renderedModels.append(PostRenderViewModel(renderType: .header(provider: userPostModel.owner)))
         renderedModels.append(PostRenderViewModel(renderType: .primaryContent(provider: userPostModel)))
         renderedModels.append(PostRenderViewModel(renderType: .actions(provider: "")))
