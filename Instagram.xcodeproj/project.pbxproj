@@ -51,6 +51,7 @@
 		0ABD9FB226B9177500331E41 /* NoNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABD9FB126B9177500331E41 /* NoNotificationsView.swift */; };
 		0ABD9FB526B91CAC00331E41 /* NotificationFollowEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABD9FB426B91CAC00331E41 /* NotificationFollowEventTableViewCell.swift */; };
 		0ABD9FB726B91CD900331E41 /* NotificationLikeEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABD9FB626B91CD900331E41 /* NotificationLikeEventTableViewCell.swift */; };
+		0ADEF2C226C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		0ABD9FB126B9177500331E41 /* NoNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNotificationsView.swift; sourceTree = "<group>"; };
 		0ABD9FB426B91CAC00331E41 /* NotificationFollowEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFollowEventTableViewCell.swift; sourceTree = "<group>"; };
 		0ABD9FB626B91CD900331E41 /* NotificationLikeEventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLikeEventTableViewCell.swift; sourceTree = "<group>"; };
+		0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				0A479B4C26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift */,
 				0ABD9FAF26B7515900331E41 /* UserFollowTableViewCell.swift */,
 				0ABD9FB126B9177500331E41 /* NoNotificationsView.swift */,
+				0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				0A479B4126A5252400A8FE61 /* IGFeedPostTableViewCell.swift in Sources */,
 				0A479B4D26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift in Sources */,
 				0AB85E5B269FF39F00E4D3D4 /* SearchResultViewController.swift in Sources */,
+				0ADEF2C226C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift in Sources */,
 				0AB85E4D269FF2C700E4D3D4 /* LoginViewController.swift in Sources */,
 				0AB85E7526A1528600E4D3D4 /* Extensions.swift in Sources */,
 				0A479B4826A527FB00A8FE61 /* IGFeedPostGeneralTableViewCell.swift in Sources */,
@@ -472,7 +476,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -527,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

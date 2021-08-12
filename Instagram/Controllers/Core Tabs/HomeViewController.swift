@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 
 struct HomeFeedRenderViewModel {
+    // Modeling a post inside the feed of the homeViewController
     let header: PostRenderViewModel
     let post: PostRenderViewModel
     let actions: PostRenderViewModel
@@ -40,6 +41,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         createMockModels()
+        
         
     }
     
@@ -102,14 +104,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             case .header, .actions, .primaryContent: return 0
             }
         }
-        
-        //        switch renderedModels[section].renderType {
-        //        case .actions(provider: _): return 1
-        //        case .comments(let comments): return comments.count > 4 ? 4:comments.count
-        //        case .primaryContent(provider: _): return 1
-        //        case .header(provider: _): return 1
-        //        }
-        
         return 0
     }
     
@@ -150,12 +144,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                                                     post: PostRenderViewModel(renderType: .primaryContent(provider: post)),
                                                     actions: PostRenderViewModel(renderType: .actions(provider: "")),
                                                     comments: PostRenderViewModel(renderType: .comments(comments: comments)))
+            // each object added to the feed renderModels will basically represent a post with 4 renderers for each section (header,post,actions,comments
             feedRenderModels.append(viewModel)
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        // x represents the index of a Full post
+        // that technique was made to insure that each sub section gets rendered in its own row
         let x = indexPath.section
         let model : HomeFeedRenderViewModel
         if x == 0 {
@@ -168,43 +164,40 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let subSection = x % 4
         if subSection == 0 {
             // header
-            let headerModel = model.header
-            
-            switch headerModel.renderType {
+            switch model.header.renderType {
             case .header(let user):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostHeaderTableViewCell.identifier,
                                                          for: indexPath) as! IGFeedPostHeaderTableViewCell
+                cell.configure(with: user)
+                cell.delegate = self
                 return cell
             case .comments, .actions, .primaryContent: return UITableViewCell()
             }
         } else if subSection == 1 {
             // post
-            let postModel = model.post
-            
-            switch postModel.renderType {
+            switch model.post.renderType {
             case .primaryContent(let post):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier,
                                                          for: indexPath) as! IGFeedPostTableViewCell
+                cell.configure(with: post)
                 return cell
             case .comments, .actions, .header: return UITableViewCell()
             }
             
         } else if subSection == 2 {
             // actions
-            let actionModel = model.actions
-            
-            switch actionModel.renderType {
+            switch model.actions.renderType {
             case .actions(let provider):
                 let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostActionsTableViewCell.identifier,
                                                          for: indexPath) as! IGFeedPostActionsTableViewCell
+                cell.delegate = self
                 return cell
             case .comments, .header, .primaryContent: return UITableViewCell()
             }
             
         } else if subSection == 3 {
             // comments
-            let commentModel = model.comments
-            switch commentModel.renderType {
+            switch model.comments.renderType {
             case .comments(let comments):let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
                                                                                   for: indexPath) as! IGFeedPostGeneralTableViewCell
                 return cell
@@ -214,7 +207,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         return UITableViewCell()
-    
+        
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -247,4 +240,46 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let subSection = section % 4
         return subSection == 3 ? 70 : 0
     }
+}
+
+
+extension HomeViewController: IGFeedPostHeaderTableViewCellDelegate {
+    
+    func didTapMoreButton() {
+        let actionSheet = UIAlertController(title: "Post Options", message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Report the post", style: .destructive, handler: { [weak self] _ in
+            self?.reportPost()
+            
+        }))
+        
+        present(actionSheet, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    private func reportPost() {
+        
+    }
+    
+    
+}
+
+
+extension HomeViewController: IGFeedPostActionsTableViewCellDelegate {
+    
+    func didTapLikeButton() {
+        print("Like")
+    }
+    
+    func didTapCommentButton() {
+        print("Comment")
+    }
+    
+    func didTapSendButton() {
+        print("Send")
+    }
+    
+    
 }

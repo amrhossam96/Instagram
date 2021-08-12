@@ -58,7 +58,6 @@ class PostViewController: UIViewController {
     
     init(model: UserPost?) {
         self.model = model
-        
         super.init(nibName: nil, bundle: nil)
         configureModels()
         
@@ -143,6 +142,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         case .primaryContent(let post):
             let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier,
                                                      for: indexPath) as! IGFeedPostTableViewCell
+            
             return cell
             
         case .header(let users):

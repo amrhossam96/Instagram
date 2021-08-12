@@ -62,5 +62,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Amr&apos;s Instagram asks for permission to use the Camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Amr&apos;s Instagram asks for permission to use the Microphone</string>
 </dict>
 </plist>
