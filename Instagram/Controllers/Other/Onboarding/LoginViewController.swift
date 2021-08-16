@@ -97,7 +97,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         addSubViews()
         loginButton.addTarget(self,
                               action: #selector(didTapLoginButton),
@@ -163,6 +162,8 @@ class LoginViewController: UIViewController {
         configureHeaderView()
     }
     
+    
+  
     
     private func configureHeaderView(){
         

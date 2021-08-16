@@ -22,11 +22,20 @@ class CameraViewController: UIViewController {
         return button
     }()
     
+    private let cancelCapturingButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.bounds
         shutterButton.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height-120)
+        cancelCapturingButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
     }
     
     override func viewDidLoad() {
@@ -41,7 +50,19 @@ class CameraViewController: UIViewController {
                                 action: #selector(didTapTakePicture),
                                 for: .touchUpInside)
         tabBarController?.tabBar.isHidden = true
+        view.addSubview(cancelCapturingButton)
+        cancelCapturingButton.addTarget(self,
+                                        action: #selector(didTapCancelCapturingButton),
+                                        for: .touchUpInside)
         
+    }
+    
+    @objc private func didTapCancelCapturingButton() {
+        tabBarController?.selectedIndex = 0
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func setupCamera() {

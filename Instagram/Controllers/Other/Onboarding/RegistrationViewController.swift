@@ -118,6 +118,7 @@ class RegistrationViewController: UIViewController {
             DispatchQueue.main.async {
                 if registered {
                     // good to go
+
                 } else {
                     
                 }
