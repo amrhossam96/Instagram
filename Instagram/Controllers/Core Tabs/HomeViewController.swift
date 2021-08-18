@@ -32,6 +32,8 @@ class HomeViewController: UIViewController {
                            forCellReuseIdentifier: IGFeedPostActionsTableViewCell.identifier)
         tableView.register(IGFeedPostGeneralTableViewCell.self,
                            forCellReuseIdentifier: IGFeedPostGeneralTableViewCell.identifier)
+        tableView.register(IGLikesIndicatorTableViewCell.self,
+                           forCellReuseIdentifier: IGLikesIndicatorTableViewCell.identifier)
         return tableView
     }()
     
@@ -40,6 +42,7 @@ class HomeViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         createMockModels()
         configureNavigationControllerIcons()
     }
@@ -58,7 +61,12 @@ class HomeViewController: UIViewController {
         
         navigationItem.leftBarButtonItem?.tintColor = .label
         navigationItem.rightBarButtonItem?.tintColor = .label
+        let origImage = UIImage(named: "mainlogo")
+        let tintedImage = origImage?.withRenderingMode(.alwaysTemplate).withTintColor(.label)
 
+        navigationItem.titleView = UIImageView(image: tintedImage)
+
+        navigationController?.navigationBar.tintColor = .label
     }
     
     override func viewDidLayoutSubviews() {
@@ -217,9 +225,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         } else if subSection == 3 {
             // comments
             switch model.comments.renderType {
-            case .comments(let comments):let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
-                                                                                  for: indexPath) as! IGFeedPostGeneralTableViewCell
-                return cell
+            case .comments(let comments):
+                if indexPath.row == 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: IGLikesIndicatorTableViewCell.identifier,
+                                                                                      for: indexPath) as! IGLikesIndicatorTableViewCell
+                    return cell
+                }
+                else if indexPath.row == 1 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
+                                                                                      for: indexPath) as! IGFeedPostGeneralTableViewCell
+                    return cell
+                }
             case .header, .actions, .primaryContent: return UITableViewCell()
             }
             
@@ -242,10 +258,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return tableView.width
         }
         else if subSection == 2 {
-            return 60
+            return 45
         }
         else if subSection == 3 {
-            return 50
+            return 30
         }
         
         return 0
