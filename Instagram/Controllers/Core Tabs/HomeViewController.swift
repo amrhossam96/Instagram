@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         createMockModels()
-        
+    
         
     }
     

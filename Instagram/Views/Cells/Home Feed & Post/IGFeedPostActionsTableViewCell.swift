@@ -67,6 +67,7 @@ class IGFeedPostActionsTableViewCell: UITableViewCell {
         sendButton.addTarget(self,
                              action: #selector(didTapSendButton),
                              for: .touchUpInside)
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

@@ -28,6 +28,7 @@ final class IGFeedPostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.layer.addSublayer(playerLayer)
         contentView.addSubview(postImageView)
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

@@ -55,6 +55,7 @@ class IGFeedPostHeaderTableViewCell: UITableViewCell {
         moreButton.addTarget(self,
                              action: #selector(didTapButton),
                              for: .touchUpInside)
+        selectionStyle = .none
         
         
     }
