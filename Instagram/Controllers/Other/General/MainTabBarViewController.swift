@@ -19,6 +19,7 @@ class MainTabBarViewController: UITabBarController {
         let vc3 = UINavigationController(rootViewController: CameraViewController())
         let vc4 = UINavigationController(rootViewController: NotificationsViewController())
         let vc5 = UINavigationController(rootViewController: ProfileViewController())
+        
         setViewControllers([vc1, vc2, vc3, vc4, vc5], animated: true)
         
         let images = ["house","grid","plus","heart","person"]

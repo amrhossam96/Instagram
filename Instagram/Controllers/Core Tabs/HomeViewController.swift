@@ -41,14 +41,30 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         createMockModels()
-    
-        
+        configureNavigationControllerIcons()
     }
     
+    
+    
+    private func configureNavigationControllerIcons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera,
+                                                           target: self,
+                                                           action: nil)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: nil)
+        
+        navigationItem.leftBarButtonItem?.tintColor = .label
+        navigationItem.rightBarButtonItem?.tintColor = .label
+
+    }
     
     override func viewDidLayoutSubviews() {
         tableView.frame = view.bounds
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         handleNonAuthenticated()
@@ -271,6 +287,10 @@ extension HomeViewController: IGFeedPostHeaderTableViewCellDelegate {
 
 
 extension HomeViewController: IGFeedPostActionsTableViewCellDelegate {
+    func didTapBookmarkButton() {
+        print("bookmark")
+    }
+    
     
     func didTapLikeButton() {
         print("Like")

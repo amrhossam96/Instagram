@@ -72,7 +72,7 @@ class IGFeedPostHeaderTableViewCell: UITableViewCell {
     
     public func configure(with model: User) {
         // configure the cell
-        usernameLabel.text = model.username
+        usernameLabel.text = model.name.first + " " + model.name.last
         profilePhotoImageView.image = #imageLiteral(resourceName: "testImage")
 //        profilePhotoImageView.sd_setImage(with: model.profilePhoto, completed: nil)
         
@@ -80,14 +80,14 @@ class IGFeedPostHeaderTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let size = contentView.height - 16
-        profilePhotoImageView.frame = CGRect(x: 2,
-                                             y: 8,
+        let size = contentView.height - 24
+        profilePhotoImageView.frame = CGRect(x: 5,
+                                             y: 12,
                                              width: size,
                                              height: size)
         profilePhotoImageView.layer.cornerRadius = size / 2
         
-        moreButton.frame = CGRect(x: contentView.width-size, y: 2, width: size, height: size)
+        moreButton.frame = CGRect(x: contentView.width-size, y: 12, width: size, height: size)
         usernameLabel.frame = CGRect(x: profilePhotoImageView.right + 10,
                                      y: 2,
                                      width: contentView.width-(size*2)-15,
