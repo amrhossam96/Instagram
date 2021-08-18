@@ -117,8 +117,18 @@ class RegistrationViewController: UIViewController {
             
             DispatchQueue.main.async {
                 if registered {
-                    // good to go
+                    
+                    let alert = UIAlertController(title: "Success",
+                                                  message: "Registration succeeded. Please Login",
+                                                  preferredStyle: .alert)
 
+                    alert.addAction(UIAlertAction(title: "Dismiss",
+                                                  style: .default) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                    
+                    self.present(alert, animated: true)
+                    
                 } else {
                     
                 }
