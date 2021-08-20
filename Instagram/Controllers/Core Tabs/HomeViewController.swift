@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     
     
     private var feedRenderModels = [HomeFeedRenderViewModel]()
-    
+    var storiesCollectionView: UICollectionView?
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(IGFeedPostTableViewCell.self,
@@ -34,8 +34,19 @@ class HomeViewController: UIViewController {
                            forCellReuseIdentifier: IGFeedPostGeneralTableViewCell.identifier)
         tableView.register(IGLikesIndicatorTableViewCell.self,
                            forCellReuseIdentifier: IGLikesIndicatorTableViewCell.identifier)
+        tableView.register(IGFeedPostCommentTableViewCell.self,
+                           forCellReuseIdentifier: IGFeedPostCommentTableViewCell.identifier)
         return tableView
     }()
+    
+    let storiesPlaceholderView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    
+   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +54,30 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.tableHeaderView = storiesPlaceholderView
         createMockModels()
         configureNavigationControllerIcons()
+        configureStoriesCollectionView()
+        guard let storiesCollectionView = storiesCollectionView else {
+            return
+        }
+        storiesPlaceholderView.addSubview(storiesCollectionView)
+        
     }
     
+    private func configureStoriesCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 90, height: 90)
+        storiesCollectionView = UICollectionView(frame: .zero,
+                                                 collectionViewLayout: layout)
+        storiesCollectionView?.showsHorizontalScrollIndicator = false
+        storiesCollectionView?.delegate = self
+        storiesCollectionView?.dataSource = self
+        storiesCollectionView?.register(StoriesCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: StoriesCollectionViewCell.identifier)
+        
+    }
     
     
     private func configureNavigationControllerIcons() {
@@ -71,6 +102,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         tableView.frame = view.bounds
+        storiesPlaceholderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
+        storiesCollectionView?.frame = storiesPlaceholderView.bounds
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,7 +160,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // comments
             let commentModel = model.comments
             switch commentModel.renderType {
-            case .comments(let comments): return comments.count > 2 ? 2 : comments.count
+            case .comments(let comments): return comments.count > 4 ? 4 : comments.count
             case .header, .actions, .primaryContent: return 0
             }
         }
@@ -235,6 +268,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
                                                                                       for: indexPath) as! IGFeedPostGeneralTableViewCell
                     return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostCommentTableViewCell.identifier,
+                                                                                      for: indexPath) as! IGFeedPostCommentTableViewCell
+                    return cell
                 }
             case .header, .actions, .primaryContent: return UITableViewCell()
             }
@@ -320,5 +357,23 @@ extension HomeViewController: IGFeedPostActionsTableViewCellDelegate {
         print("Send")
     }
     
+    
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoriesCollectionViewCell.identifier,
+                                                      for: indexPath) as! StoriesCollectionViewCell
+        return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
     
 }

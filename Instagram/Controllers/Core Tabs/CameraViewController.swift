@@ -59,6 +59,7 @@ class CameraViewController: UIViewController {
     
     @objc private func didTapCancelCapturingButton() {
         tabBarController?.selectedIndex = 0
+        session?.stopRunning()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -15,6 +15,7 @@
 		0A479B4D26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4C26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift */; };
 		0A479B4F26AAB39900A8FE61 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4E26AAB39900A8FE61 /* ProfileInfoHeaderCollectionReusableView.swift */; };
 		0A479B5126AAB3DE00A8FE61 /* ProfileTabsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B5026AAB3DE00A8FE61 /* ProfileTabsCollectionReusableView.swift */; };
+		0A52D20626CE2F0800DF4E34 /* StoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52D20526CE2F0800DF4E34 /* StoriesCollectionViewCell.swift */; };
 		0AB85E29269FF05000E4D3D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E28269FF05000E4D3D4 /* AppDelegate.swift */; };
 		0AB85E2B269FF05000E4D3D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E2A269FF05000E4D3D4 /* SceneDelegate.swift */; };
 		0AB85E2D269FF05000E4D3D4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB85E2C269FF05000E4D3D4 /* HomeViewController.swift */; };
@@ -53,6 +54,7 @@
 		0ADEF2C226C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */; };
 		0AE5383726CC956F00C8270C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5383626CC956F00C8270C /* MainTabBarViewController.swift */; };
 		0AE5383C26CD3AFE00C8270C /* IGLikesIndicatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5383B26CD3AFE00C8270C /* IGLikesIndicatorTableViewCell.swift */; };
+		0AE5383E26CD4CE800C8270C /* IGFeedPostCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE5383D26CD4CE800C8270C /* IGFeedPostCommentTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,7 @@
 		0A479B4C26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		0A479B4E26AAB39900A8FE61 /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		0A479B5026AAB3DE00A8FE61 /* ProfileTabsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabsCollectionReusableView.swift; sourceTree = "<group>"; };
+		0A52D20526CE2F0800DF4E34 /* StoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AB85E25269FF05000E4D3D4 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AB85E28269FF05000E4D3D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AB85E2A269FF05000E4D3D4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AE5383626CC956F00C8270C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		0AE5383B26CD3AFE00C8270C /* IGLikesIndicatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGLikesIndicatorTableViewCell.swift; sourceTree = "<group>"; };
+		0AE5383D26CD4CE800C8270C /* IGFeedPostCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostCommentTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 				0ABD9FAF26B7515900331E41 /* UserFollowTableViewCell.swift */,
 				0ABD9FB126B9177500331E41 /* NoNotificationsView.swift */,
 				0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */,
+				0A52D20526CE2F0800DF4E34 /* StoriesCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 				0A479B4526A527C700A8FE61 /* IGFeedPostActionsTableViewCell.swift */,
 				0A479B4726A527FB00A8FE61 /* IGFeedPostGeneralTableViewCell.swift */,
 				0AE5383B26CD3AFE00C8270C /* IGLikesIndicatorTableViewCell.swift */,
+				0AE5383D26CD4CE800C8270C /* IGFeedPostCommentTableViewCell.swift */,
 			);
 			path = "Home Feed & Post";
 			sourceTree = "<group>";
@@ -370,6 +376,7 @@
 				0AB85E53269FF34500E4D3D4 /* EditProfileViewController.swift in Sources */,
 				0AB85E42269FF1D300E4D3D4 /* ExploreViewController.swift in Sources */,
 				0AB85E5F269FF40400E4D3D4 /* PublishPostViewController.swift in Sources */,
+				0A52D20626CE2F0800DF4E34 /* StoriesCollectionViewCell.swift in Sources */,
 				0AB85E44269FF20500E4D3D4 /* CameraViewController.swift in Sources */,
 				0AB85E2D269FF05000E4D3D4 /* HomeViewController.swift in Sources */,
 				0AB85E4F269FF2E500E4D3D4 /* RegistrationViewController.swift in Sources */,
@@ -398,6 +405,7 @@
 				0AB85E59269FF38300E4D3D4 /* SearchViewController.swift in Sources */,
 				0A479B4F26AAB39900A8FE61 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
 				0AB85E48269FF23F00E4D3D4 /* ProfileViewController.swift in Sources */,
+				0AE5383E26CD4CE800C8270C /* IGFeedPostCommentTableViewCell.swift in Sources */,
 				0AB85E7126A0146B00E4D3D4 /* AuthManager.swift in Sources */,
 				0AB85E29269FF05000E4D3D4 /* AppDelegate.swift in Sources */,
 				0AB85E2B269FF05000E4D3D4 /* SceneDelegate.swift in Sources */,

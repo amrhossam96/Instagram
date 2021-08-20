@@ -118,7 +118,7 @@ class IGFeedPostActionsTableViewCell: UITableViewCell {
             let button = buttons[x]
             button.frame = CGRect(x: (CGFloat(x)*buttonSize) + (10*CGFloat(x+1)), y: 5, width: buttonSize, height: buttonSize)
         }
-        bookmarkButton.frame = CGRect(x: contentView.width-70, y: 5, width: buttonSize, height: buttonSize)
+        bookmarkButton.frame = CGRect(x: contentView.width-50, y: 5, width: buttonSize, height: buttonSize)
     }
 
     
