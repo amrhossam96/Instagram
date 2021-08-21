@@ -68,7 +68,7 @@ class HomeViewController: UIViewController {
     private func configureStoriesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 90, height: 90)
+        layout.itemSize = CGSize(width: 80, height: 80)
         storiesCollectionView = UICollectionView(frame: .zero,
                                                  collectionViewLayout: layout)
         storiesCollectionView?.showsHorizontalScrollIndicator = false

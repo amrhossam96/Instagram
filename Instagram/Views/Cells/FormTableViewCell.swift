@@ -9,7 +9,7 @@ import UIKit
 
 
 protocol FormTableViewCellDelegate: AnyObject {
-    func formTableViewCell(_ cell: FormTableViewCell, didUpdateField updatedModel: EditProfileFormModel)
+    func didFinishEditing(with model: EditProfileFormModel)
 }
 
 class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -48,6 +48,7 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     // the way back for the controller to talk to the view
     public func configure(with model: EditProfileFormModel) {
+
         self.model = model
         formLabel.text = model.label
         field.placeholder = model.placeHolder
@@ -68,27 +69,18 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
         
     }
     
-    // life cycle method that gets called after dequeuinga cell
+    // life cycle method that gets called after dequeuing a cell
     override func prepareForReuse() {
         super.prepareForReuse()
         formLabel.text = nil
         field.placeholder = nil
         field.text = nil
-        
     }
     
-    
-    
-    // delegate method for the ui text field, which we are going to use to talk back to the controller and update it
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         model?.value = textField.text
-        guard let model = model else {
-            return true
-        }
-        
-        delegate?.formTableViewCell(self, didUpdateField: model)
-        textField.resignFirstResponder()
-        return true
+        guard let model = model else { return}
+        print(model)
+        delegate?.didFinishEditing(with: model)
     }
-    
 }

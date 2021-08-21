@@ -14,7 +14,6 @@ class StoriesCollectionViewCell: UICollectionViewCell {
     static let identifier = "StoriesCollectionViewCell"
     
     let cellImageView: UIImageView = {
-       
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = .orange

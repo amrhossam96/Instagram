@@ -36,5 +36,31 @@ public class DatabaseManager {
         }
     }
     
+    public func updateUserInfo(name: String, username: String, website: String, bio: String, email: String, phone: String, gender: String, completion: @escaping (Bool)-> Void) {
+        
+        database.child(email.safeDatabaseKey()).setValue(["name":name,
+                                                          "username": username,
+                                                          "website":website,
+                                                          "bio":bio,
+                                                          "email":email,
+                                                          "phone":phone,
+                                                          "gender":gender]){ error, _ in
+            if error == nil {
+                completion(true)
+                return
+            } else {
+                completion(false)
+                return
+            }
+        }
+        
+    }
+    
+    public func getUserInfo(email: String, completion: @escaping (Bool, [String: String]) -> Void) {
+        database.child(email.safeDatabaseKey()).getData { error, snapshot in
+            guard let data = snapshot.value else {return}
+            completion(true, data as! [String:String])
+        }
+    }
     
 }

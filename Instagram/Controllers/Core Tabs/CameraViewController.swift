@@ -9,6 +9,15 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController {
+    var imageView: UIImageView?
+    let cancelEditButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
 
     var session: AVCaptureSession?
     let output = AVCapturePhotoOutput()
@@ -36,6 +45,8 @@ class CameraViewController: UIViewController {
         previewLayer.frame = view.bounds
         shutterButton.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height-120)
         cancelCapturingButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
+        cancelEditButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
+        
     }
     
     override func viewDidLoad() {
@@ -51,10 +62,25 @@ class CameraViewController: UIViewController {
                                 for: .touchUpInside)
         tabBarController?.tabBar.isHidden = true
         view.addSubview(cancelCapturingButton)
+        view.addSubview(cancelEditButton)
         cancelCapturingButton.addTarget(self,
                                         action: #selector(didTapCancelCapturingButton),
                                         for: .touchUpInside)
         
+        cancelEditButton.addTarget(self,
+                                        action: #selector(didTapCancelEditButton),
+                                        for: .touchUpInside)
+        
+    }
+    
+    @objc private func didTapCancelEditButton() {
+        
+        imageView = nil
+        cancelEditButton.isHidden = true
+        session?.startRunning()
+        cancelCapturingButton.isHidden = false
+        shutterButton.isHidden = false
+
     }
     
     @objc private func didTapCancelCapturingButton() {
@@ -64,6 +90,9 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
+        cancelCapturingButton.isHidden = false
+        cancelEditButton.isHidden = true
+        session?.startRunning()
     }
     
     private func setupCamera() {
@@ -118,22 +147,28 @@ class CameraViewController: UIViewController {
     
     @objc private func didTapTakePicture(){
         output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+        cancelCapturingButton.isHidden = true
+        cancelEditButton.isHidden = false
+        shutterButton.isHidden = true
     }
 
 }
 
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    
+    
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let data = photo.fileDataRepresentation() else {
             return
         }
         let image = UIImage(data: data)
         session?.stopRunning()
-        let imageView = UIImageView(image: image)
+        guard var imageView = imageView else {return}
+        imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.frame = view.bounds
         view.addSubview(imageView)
-        
     }
 }

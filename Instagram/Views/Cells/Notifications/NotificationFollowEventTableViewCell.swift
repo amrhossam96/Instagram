@@ -29,7 +29,7 @@ class NotificationFollowEventTableViewCell: UITableViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "@SarahHany mentioned you"
+        label.text = "@user mentioned you"
         label.numberOfLines = 0 // wrap
         return label
     }()

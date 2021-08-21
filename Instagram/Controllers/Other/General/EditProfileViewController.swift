@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 struct EditProfileFormModel {
     let label:String
@@ -13,19 +14,68 @@ struct EditProfileFormModel {
     var value: String?
 }
 
+struct ProfileDataModel {
+    var name: String?
+    var username: String?
+    var website: String?
+    var bio: String?
+    var email: String?
+    var phone: String?
+    var gender: String?
+}
 
-
+    
 
 
 final class EditProfileViewController: UIViewController, UITableViewDataSource {
     
+    
+    
+    var dataModel: ProfileDataModel = ProfileDataModel()
+    
+    private func populateProfileDataModel () {
+        // use firebase to populate the data
+        guard let userEmail = Auth.auth().currentUser?.email else  {return}
+        DatabaseManager.shared.getUserInfo(email: userEmail) { success, results in
+            self.dataModel.name = results["name"]
+            self.dataModel.username = results["username"]
+            self.dataModel.bio = results["bio"]
+            self.dataModel.email = results["email"]
+            self.dataModel.phone = results["phone"]
+            self.dataModel.website = results["website"]
+            self.dataModel.gender = results["gender"]
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = models[indexPath.section][indexPath.row]
+        var model = models[indexPath.section][indexPath.row]
+        switch model.label {
+        case "Name":
+            model.value = dataModel.name
+        case "Username":
+            model.value = dataModel.username
+        case "Bio":
+            model.value = dataModel.bio
+        case "Email":
+            model.value = dataModel.email
+        case "Phone":
+            model.value = dataModel.phone
+        case "Website":
+            model.value = dataModel.website
+        case "Gender":
+            model.value = dataModel.gender
+        default:
+            fatalError("dev error")
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: FormTableViewCell.identifier, for: indexPath) as! FormTableViewCell
         cell.configure(with: model)
         cell.delegate = self
@@ -49,11 +99,11 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        populateProfileDataModel()
         configureModels()
         tableView.allowsSelection = false
         tableView.tableHeaderView = createTableHeaderView()
         view.backgroundColor = .systemBackground
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save",
                                                             style: .done,
                                                             target: self,
@@ -86,7 +136,6 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
         }
         models.append(sectionOne)
         // email phone gender
-        
         let sectionTwoLabels = ["Email","Phone","Gender"]
         var sectionTwo = [EditProfileFormModel]()
         for label in sectionTwoLabels {
@@ -104,6 +153,16 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
     
     @objc private func didTapSave() {
         // save to database
+        DatabaseManager.shared.updateUserInfo(name: dataModel.name ?? "",
+                                              username: dataModel.username ?? "",
+                                              website: dataModel.website ?? "",
+                                              bio: dataModel.bio ?? "",
+                                              email: dataModel.email ?? "",
+                                              phone: dataModel.phone ?? "",
+                                              gender: dataModel.gender ?? "") { success in
+            
+                
+        }
         dismiss(animated: true, completion: nil)
     }
     
@@ -163,10 +222,24 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
 
 
 extension EditProfileViewController: FormTableViewCellDelegate {
-
-    
-    func formTableViewCell(_ cell: FormTableViewCell, didUpdateField updatedModel: EditProfileFormModel) {
-        print(updatedModel.label)
-        print(updatedModel.value ?? "nil")
+    func didFinishEditing(with model: EditProfileFormModel) {
+        switch model.label {
+        case "Name":
+            dataModel.name = model.value?.lowercased()
+        case "Username":
+            dataModel.username = model.value?.lowercased()
+        case "Website":
+            dataModel.website = model.value?.lowercased()
+        case "Bio":
+            dataModel.bio = model.value?.lowercased()
+        case "Email":
+            dataModel.email = model.value?.lowercased()
+        case "Phone":
+            dataModel.phone = model.value?.lowercased()
+        case "Gender":
+            dataModel.gender = model.value?.lowercased()
+        default:
+            fatalError("dev error: shouldn't be called")
+        }
     }
 }

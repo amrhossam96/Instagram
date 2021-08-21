@@ -13,7 +13,7 @@ class IGFeedPostCommentTableViewCell: UITableViewCell {
    
     let likesIindicator: UILabel = {
         let label = UILabel()
-        label.text = "@Amr  Amazing.!!! "
+        label.text = "@user comment goes here "
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.numberOfLines = 0
         return label

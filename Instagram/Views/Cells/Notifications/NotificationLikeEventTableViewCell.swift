@@ -31,7 +31,7 @@ class NotificationLikeEventTableViewCell: UITableViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "@Sarah Hany Liked your photo"
+        label.text = "@user Liked your photo"
         label.numberOfLines = 0 // wrap
         return label
     }()
