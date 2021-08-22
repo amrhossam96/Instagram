@@ -24,6 +24,8 @@
 	<string>Amr's Instagram asks for permission to use the Camera</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Amr's Instagram asks for permission to use the Microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Instagram asks for permission to Access photo library</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -52,8 +54,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

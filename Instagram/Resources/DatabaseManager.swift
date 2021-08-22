@@ -6,6 +6,7 @@
 //
 
 import FirebaseDatabase
+import FirebaseAuth
 
 public class DatabaseManager {
     static let shared = DatabaseManager()
@@ -37,12 +38,12 @@ public class DatabaseManager {
     }
     
     public func updateUserInfo(name: String, username: String, website: String, bio: String, email: String, phone: String, gender: String, completion: @escaping (Bool)-> Void) {
-        
-        database.child(email.safeDatabaseKey()).setValue(["name":name,
+        guard let emailAddress = Auth.auth().currentUser?.email else {return}
+        database.child(emailAddress.safeDatabaseKey()).setValue(["name":name,
                                                           "username": username,
                                                           "website":website,
                                                           "bio":bio,
-                                                          "email":email,
+                                                          "email":email.safeDatabaseKey(),
                                                           "phone":phone,
                                                           "gender":gender]){ error, _ in
             if error == nil {

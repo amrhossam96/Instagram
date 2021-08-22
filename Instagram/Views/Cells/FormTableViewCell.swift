@@ -52,7 +52,16 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.model = model
         formLabel.text = model.label
         field.placeholder = model.placeHolder
-        field.text = model.value
+        model.value?.split(separator: " ").forEach{
+            word in
+            if field.text!.count > 0 {
+                field.text?.append(" "+String(word).capitalizingFirstLetter())
+            } else {
+                field.text?.append(String(word).capitalizingFirstLetter())
+            }
+
+
+        }
     }
     // setting frames
     override func layoutSubviews() {
@@ -77,10 +86,10 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
         field.text = nil
     }
     
+    
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         model?.value = textField.text
         guard let model = model else { return}
-        print(model)
         delegate?.didFinishEditing(with: model)
     }
 }

@@ -10,6 +10,8 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
     var imageView: UIImageView?
+    var pickedMediaView: UIImageView?
+    
     let cancelEditButton: UIButton = {
         let button = UIButton()
         let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
@@ -18,10 +20,21 @@ class CameraViewController: UIViewController {
         button.tintColor = .white
         return button
     }()
+    
+    
+    let toggleCameraButton: UIButton = {
+       
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
+        let image = UIImage(systemName: "arrow.triangle.swap", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
 
     var session: AVCaptureSession?
     let output = AVCapturePhotoOutput()
-    let previewLayer = AVCaptureVideoPreviewLayer()
+    var previewLayer = AVCaptureVideoPreviewLayer()
     
     private let shutterButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -40,12 +53,23 @@ class CameraViewController: UIViewController {
         return button
     }()
     
+    private let pickMediaButton: UIButton = {
+        let button = UIButton()
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
+        let image = UIImage(systemName: "photo", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.bounds
         shutterButton.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height-120)
         cancelCapturingButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
         cancelEditButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
+        toggleCameraButton.frame = CGRect(x: view.width-90, y: view.height - 200, width: 90, height: 90)
+        pickMediaButton.frame = CGRect(x: 2, y: view.height - 200, width: 90, height: 90)
         
     }
     
@@ -55,8 +79,9 @@ class CameraViewController: UIViewController {
         view.backgroundColor = .black
         view.layer.addSublayer(previewLayer)
         view.addSubview(shutterButton)
+        view.addSubview(pickMediaButton)
         checkCameraPermissions()
-        
+        view.addSubview(toggleCameraButton)
         shutterButton.addTarget(self,
                                 action: #selector(didTapTakePicture),
                                 for: .touchUpInside)
@@ -70,7 +95,25 @@ class CameraViewController: UIViewController {
         cancelEditButton.addTarget(self,
                                         action: #selector(didTapCancelEditButton),
                                         for: .touchUpInside)
+        pickMediaButton.addTarget(self,
+                                  action: #selector(didTapPickMediaButton),
+                                  for: .touchUpInside)
+        toggleCameraButton.addTarget(self,
+                                     action: #selector(didTapToggleCameraButton),
+                                     for: .touchUpInside)
         
+    }
+    
+    
+    
+    @objc private func didTapPickMediaButton() {
+        previewLayer.isHidden = true
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+        session?.stopRunning()
     }
     
     @objc private func didTapCancelEditButton() {
@@ -80,7 +123,11 @@ class CameraViewController: UIViewController {
         session?.startRunning()
         cancelCapturingButton.isHidden = false
         shutterButton.isHidden = false
-
+        pickMediaButton.isHidden = false
+        toggleCameraButton.isHidden = false
+        pickedMediaView?.image = nil
+        pickMediaButton.isHidden = false
+        previewLayer.isHidden = false
     }
     
     @objc private func didTapCancelCapturingButton() {
@@ -89,10 +136,18 @@ class CameraViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        previewLayer.isHidden = false
         tabBarController?.tabBar.isHidden = true
         cancelCapturingButton.isHidden = false
         cancelEditButton.isHidden = true
+        pickMediaButton.isHidden = false
+        toggleCameraButton.isHidden = false
         session?.startRunning()
+    }
+    
+    @objc private func didTapToggleCameraButton() {
+
+
     }
     
     private func setupCamera() {
@@ -150,14 +205,14 @@ class CameraViewController: UIViewController {
         cancelCapturingButton.isHidden = true
         cancelEditButton.isHidden = false
         shutterButton.isHidden = true
+        pickMediaButton.isHidden = true
+        toggleCameraButton.isHidden = true
     }
 
 }
 
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
-    
-    
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let data = photo.fileDataRepresentation() else {
@@ -167,8 +222,36 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         session?.stopRunning()
         guard var imageView = imageView else {return}
         imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.frame = view.bounds
         view.addSubview(imageView)
     }
+}
+
+
+extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        session?.stopRunning()
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            pickedMediaView = UIImageView(frame: view.bounds)
+            guard let pickedMediaView = pickedMediaView else {return}
+            pickedMediaView.image = image
+            pickedMediaView.contentMode = .scaleAspectFit
+            view.addSubview(pickedMediaView)
+        }
+        picker.dismiss(animated: true, completion: nil)
+        session?.stopRunning()
+        cancelCapturingButton.isHidden = true
+        cancelEditButton.isHidden = false
+        pickMediaButton.isHidden = true
+        toggleCameraButton.isHidden = true
+        shutterButton.isHidden = true
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+   
 }
