@@ -9,8 +9,11 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController {
+    
+    
     var imageView: UIImageView?
     var pickedMediaView: UIImageView?
+    
     
     let cancelEditButton: UIButton = {
         let button = UIButton()
@@ -70,7 +73,6 @@ class CameraViewController: UIViewController {
         cancelEditButton.frame = CGRect(x: view.width-90, y: view.safeAreaInsets.top, width: 90, height: 90)
         toggleCameraButton.frame = CGRect(x: view.width-90, y: view.height - 200, width: 90, height: 90)
         pickMediaButton.frame = CGRect(x: 2, y: view.height - 200, width: 90, height: 90)
-        
     }
     
     override func viewDidLoad() {
@@ -108,17 +110,15 @@ class CameraViewController: UIViewController {
     
     @objc private func didTapPickMediaButton() {
         previewLayer.isHidden = true
+        session?.stopRunning()
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self
         vc.allowsEditing = true
         present(vc, animated: true)
-        session?.stopRunning()
     }
     
     @objc private func didTapCancelEditButton() {
-        
-        imageView = nil
         cancelEditButton.isHidden = true
         session?.startRunning()
         cancelCapturingButton.isHidden = false
@@ -142,6 +142,7 @@ class CameraViewController: UIViewController {
         cancelEditButton.isHidden = true
         pickMediaButton.isHidden = false
         toggleCameraButton.isHidden = false
+        shutterButton.isHidden = false
         session?.startRunning()
     }
     
@@ -234,19 +235,23 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         session?.stopRunning()
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            pickedMediaView = UIImageView(frame: view.bounds)
-            guard let pickedMediaView = pickedMediaView else {return}
-            pickedMediaView.image = image
-            pickedMediaView.contentMode = .scaleAspectFit
-            view.addSubview(pickedMediaView)
+
+
+            let vc = PostEditorViewController()
+            vc.originalImage = image
+            vc.modalPresentationStyle = .fullScreen
+            picker.dismiss(animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
+           
+          
         }
-        picker.dismiss(animated: true, completion: nil)
-        session?.stopRunning()
         cancelCapturingButton.isHidden = true
-        cancelEditButton.isHidden = false
+        cancelEditButton.isHidden = true
         pickMediaButton.isHidden = true
         toggleCameraButton.isHidden = true
         shutterButton.isHidden = true
+        
+
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

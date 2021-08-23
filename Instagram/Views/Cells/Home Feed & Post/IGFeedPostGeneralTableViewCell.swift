@@ -14,18 +14,16 @@ class IGFeedPostGeneralTableViewCell: UITableViewCell {
     let postOwnerUsernameLabel: UILabel = {
         let label = UILabel()
         label.text = "@amrhossam"
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.numberOfLines = 1
         return label
     }()
     
     let postOwnerCaptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Caption goes herer"
+        label.text = "Caption goes here"
         label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -35,7 +33,6 @@ class IGFeedPostGeneralTableViewCell: UITableViewCell {
         selectionStyle = .none
         addSubview(postOwnerUsernameLabel)
         addSubview(postOwnerCaptionLabel)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
@@ -50,9 +47,7 @@ class IGFeedPostGeneralTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        postOwnerUsernameLabel.frame = CGRect(x: 15, y: 0, width: 120, height: contentView.height)
-
-        postOwnerCaptionLabel.leftAnchor.constraint(equalTo: postOwnerUsernameLabel.rightAnchor,constant: 25).isActive = true
-        postOwnerCaptionLabel.topAnchor.constraint(equalTo: postOwnerUsernameLabel.topAnchor, constant: 5).isActive = true
+        postOwnerUsernameLabel.frame = CGRect(x: 15, y: 0, width: 120, height: height)
+        postOwnerCaptionLabel.frame = CGRect(x: postOwnerUsernameLabel.right+10, y: 0, width: width - (postOwnerUsernameLabel.right + 10), height: contentView.height)
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 
 public enum UserPostType: String {
@@ -70,4 +70,10 @@ struct PostComment {
     let text: String
     let createdDate: Date
     let likes: [commentLikes]
+}
+
+
+struct FilterModel {
+    var name: String
+    var thumbnailImage: UIImage
 }

@@ -53,6 +53,10 @@ class PostViewController: UIViewController {
         
         tableView.register(IGFeedPostGeneralTableViewCell.self,
                            forCellReuseIdentifier: IGFeedPostGeneralTableViewCell.identifier)
+        tableView.register(IGFeedPostCommentTableViewCell.self,
+                           forCellReuseIdentifier: IGFeedPostCommentTableViewCell.identifier)
+        tableView.register(IGLikesIndicatorTableViewCell.self,
+                           forCellReuseIdentifier: IGLikesIndicatorTableViewCell.identifier)
         return tableView
     }()
     
@@ -99,6 +103,7 @@ class PostViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         view.backgroundColor = .systemBackground
     }
     
@@ -135,9 +140,20 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .comments(let comments):
-            let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
-                                                     for: indexPath) as! IGFeedPostGeneralTableViewCell
-            return cell
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: IGLikesIndicatorTableViewCell.identifier,
+                                                                                  for: indexPath) as! IGLikesIndicatorTableViewCell
+                return cell
+            }
+            else if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostGeneralTableViewCell.identifier,
+                                                                                  for: indexPath) as! IGFeedPostGeneralTableViewCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostCommentTableViewCell.identifier,
+                                                                                  for: indexPath) as! IGFeedPostCommentTableViewCell
+                return cell
+            }
             
         case .primaryContent(let post):
             let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier,
@@ -153,28 +169,27 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let model = renderedModels[indexPath.section]
-        switch model.renderType {
-        case .actions(_):
-            return 60
-            
-        case .comments(_):
-            return 50
-            
-        case .primaryContent(_):
-            return tableView.width
-            
-        case .header(_):
+        let subSection = indexPath.section % 4
+        if subSection == 0 {
             return 70
-        
+        } else if subSection == 1 {
+            return tableView.width
+        }
+        else if subSection == 2 {
+            return 45
+        }
+        else if subSection == 3 {
+            return 30
         }
         
+        return 0
     }
     
 }

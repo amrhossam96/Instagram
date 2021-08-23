@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2D299B26D30B26003C3829 /* FiltersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D299A26D30B26003C3829 /* FiltersCollectionViewCell.swift */; };
 		0A479B4126A5252400A8FE61 /* IGFeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4026A5252400A8FE61 /* IGFeedPostTableViewCell.swift */; };
 		0A479B4426A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4326A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift */; };
 		0A479B4626A527C700A8FE61 /* IGFeedPostActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4526A527C700A8FE61 /* IGFeedPostActionsTableViewCell.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A2D299A26D30B26003C3829 /* FiltersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersCollectionViewCell.swift; sourceTree = "<group>"; };
 		0A479B4026A5252400A8FE61 /* IGFeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		0A479B4326A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		0A479B4526A527C700A8FE61 /* IGFeedPostActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostActionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				0ABD9FB126B9177500331E41 /* NoNotificationsView.swift */,
 				0ADEF2C126C53D9C00A9E134 /* TabbedSearchCollectionViewCell.swift */,
 				0A52D20526CE2F0800DF4E34 /* StoriesCollectionViewCell.swift */,
+				0A2D299A26D30B26003C3829 /* FiltersCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				0AB85E51269FF31400E4D3D4 /* PostViewController.swift in Sources */,
 				0A479B5126AAB3DE00A8FE61 /* ProfileTabsCollectionReusableView.swift in Sources */,
 				0AB85E6F26A0138C00E4D3D4 /* DatabaseManager.swift in Sources */,
+				0A2D299B26D30B26003C3829 /* FiltersCollectionViewCell.swift in Sources */,
 				0AB85E46269FF23500E4D3D4 /* NotificationsViewController.swift in Sources */,
 				0A479B4126A5252400A8FE61 /* IGFeedPostTableViewCell.swift in Sources */,
 				0A479B4D26AAB2E900A8FE61 /* PhotoCollectionViewCell.swift in Sources */,

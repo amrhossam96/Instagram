@@ -19,6 +19,12 @@ struct HomeFeedRenderViewModel {
 
 class HomeViewController: UIViewController {
     
+    private let noPostsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No Posts yet."
+        label.textAlignment = .center
+        return label
+    }()
     
     private var feedRenderModels = [HomeFeedRenderViewModel]()
     var storiesCollectionView: UICollectionView?
@@ -56,6 +62,7 @@ class HomeViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.tableHeaderView = storiesPlaceholderView
         createMockModels()
+        view.addSubview(noPostsLabel)
         configureNavigationControllerIcons()
         configureStoriesCollectionView()
         guard let storiesCollectionView = storiesCollectionView else {
@@ -101,7 +108,12 @@ class HomeViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        tableView.frame = view.bounds
+        if feedRenderModels.count > 0 {
+            tableView.frame = view.bounds
+        } else {
+            noPostsLabel.frame = view.bounds
+        }
+        
         storiesPlaceholderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
         storiesCollectionView?.frame = storiesPlaceholderView.bounds
     }
