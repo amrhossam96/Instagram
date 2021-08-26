@@ -10,12 +10,13 @@ import UIKit
 class PublishPostViewController: UIViewController {
 
     
+    
+    
     let publishButton: UIButton = {
-       
         let button = UIButton()
         button.setTitle("Publish", for: .normal)
-        button.backgroundColor = .link
         button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .link
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 8
         return button
@@ -50,8 +51,57 @@ class PublishPostViewController: UIViewController {
         view.addSubview(captionTextField)
         view.backgroundColor = .systemBackground
         view.addSubview(publishButton)
+        publishButton.addTarget(self,
+                                action: #selector(didTapPublishButton),
+                                for: .touchUpInside)
     }
     
+    
+    @objc private func didTapPublishButton() {
+        // create a post
+        
+        StorageManager.shared.uploadUserImage(image: aboutToPublishImageView.image!) { success, url in
+            if success {
+                guard let url = url else {return}
+                print("Now we should upload post with url \(url)")
+                DatabaseManager.shared.addUserPost(post: self.createPostBluePrint(imageUrl: url)) { success in
+                    if success {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                
+            }
+        }
+
+    }
+    
+    
+    
+    
+    private func createPostBluePrint(imageUrl: URL) -> UserPost {
+        let model = AuthManager.shared
+        let name = model.name?.components(separatedBy: " ")
+        let user = User(username: model.username!,
+                        name: (first: name?[0] ?? " ", last: name?[1] ?? " "),
+                        profilePhoto: URL(string: "https://www.google.com")!,
+                        birthDate: Date(),
+                        gender: .male,
+                        bio: "",
+                        counts: UserCount(followers: 10, following: 1, posts: 100),
+                        joinedDate: Date())
+        let identifier = UUID.init().uuidString
+        let post = UserPost(identifier: identifier,
+                            postType: .photo,
+                            thumbnailImage: imageUrl,
+                            postUrl: URL(string: "https://www.google.com")!,
+                            caption: "Nature is beautiful.!",
+                            likeCount: [],
+                            comments: [],
+                            createdDate: Date(),
+                            taggedUsers: [user,user,user],
+                            owner: user)
+        return post
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

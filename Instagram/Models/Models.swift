@@ -19,6 +19,7 @@ public enum Gender {
     
 }
 
+
 struct User {
     let username: String
     let name: (first: String, last: String)

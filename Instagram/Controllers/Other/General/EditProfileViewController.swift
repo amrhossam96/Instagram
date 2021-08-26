@@ -35,7 +35,7 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
     
     private func populateProfileDataModel () {
         // use firebase to populate the data
-        guard let userEmail = Auth.auth().currentUser?.email else  {return}
+        guard let userEmail = Auth.auth().currentUser?.email else {return}
         DatabaseManager.shared.getUserInfo(email: userEmail) { success, results in
             self.dataModel.name = results["name"]
             self.dataModel.username = results["username"]
@@ -47,8 +47,10 @@ final class EditProfileViewController: UIViewController, UITableViewDataSource {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            
         }
+        
+        
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

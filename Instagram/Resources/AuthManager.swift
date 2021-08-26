@@ -12,6 +12,13 @@ public class AuthManager {
     static let shared = AuthManager()
     
     // MARK:- public
+    var name: String?
+    var username: String?
+    var email: String?
+    var website: String?
+    var bio: String?
+    var gender: String?
+    var phone: String?
     
     public func registerNewUser(username: String, email: String, password: String, completion: @escaping (Bool)->Void) {
         /*

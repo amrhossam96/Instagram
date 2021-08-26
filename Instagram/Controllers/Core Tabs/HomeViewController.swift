@@ -50,13 +50,28 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    
-   
-    
+    private func loadUser() {
+        guard let userEmail = Auth.auth().currentUser?.email else {return}
+        DatabaseManager.shared.getUserInfo(email: userEmail) { success, results in
+            let model = AuthManager.shared
+            model.name = results["name"]
+            model.username = results["username"]
+            model.bio = results["bio"]
+            model.email = results["email"]
+            model.phone = results["phone"]
+            model.website = results["website"]
+            model.gender = results["gender"]
+        }
+    }
+    private func fetchPosts() {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+//        fetchPosts()
+        loadUser()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
