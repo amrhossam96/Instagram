@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    
+    private var postModels = [UserPost]()
     private var feedRenderModels = [HomeFeedRenderViewModel]()
     var storiesCollectionView: UICollectionView?
     private let tableView: UITableView = {
@@ -63,20 +63,31 @@ class HomeViewController: UIViewController {
             model.gender = results["gender"]
         }
     }
+    
+//    [[String : String]]
     private func fetchPosts() {
+        self.postModels = [UserPost]()
+        self.feedRenderModels = [HomeFeedRenderViewModel]()
+        DatabaseManager.shared.listenForPostsAdded { sucess, results in
+            if sucess {
+                self.postModels = results
+                self.postModels.reverse()
+                self.createMockModels()
+            }
+        }
+        
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-//        fetchPosts()
-        loadUser()
+//        loadUser()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.tableHeaderView = storiesPlaceholderView
-        createMockModels()
+
         view.addSubview(noPostsLabel)
         configureNavigationControllerIcons()
         configureStoriesCollectionView()
@@ -84,7 +95,7 @@ class HomeViewController: UIViewController {
             return
         }
         storiesPlaceholderView.addSubview(storiesCollectionView)
-        
+      
     }
     
     private func configureStoriesCollectionView() {
@@ -96,6 +107,7 @@ class HomeViewController: UIViewController {
         storiesCollectionView?.showsHorizontalScrollIndicator = false
         storiesCollectionView?.delegate = self
         storiesCollectionView?.dataSource = self
+        storiesCollectionView?.backgroundColor = .systemBackground
         storiesCollectionView?.register(StoriesCollectionViewCell.self,
                                         forCellWithReuseIdentifier: StoriesCollectionViewCell.identifier)
         
@@ -122,13 +134,10 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
     }
     
+    
+    
     override func viewDidLayoutSubviews() {
-        if feedRenderModels.count > 0 {
-            tableView.frame = view.bounds
-        } else {
-            noPostsLabel.frame = view.bounds
-        }
-        
+        tableView.frame = view.bounds
         storiesPlaceholderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
         storiesCollectionView?.frame = storiesPlaceholderView.bounds
     }
@@ -140,6 +149,8 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        fetchPosts()
+        tableView.reloadData()
     }
     
     private func handleNonAuthenticated() {
@@ -195,44 +206,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func createMockModels() {
-        let user = User(username: "@Amr",
-                        name: (first: "Amr", last: "Hossam"),
-                        profilePhoto: URL(string: "www.google.com)")!,
-                        birthDate: Date(),
-                        gender: .male,
-                        bio: "",
-                        counts: UserCount(followers: 1,
-                                          following: 1,
-                                          posts: 1),
-                        joinedDate: Date())
-        
-        let post = UserPost(identifier: "",
-                            postType: .photo,
-                            thumbnailImage: URL(string: "www.google.com)")!,
-                            postUrl: URL(string: "www.google.com)")!,
-                            caption: nil,
-                            likeCount: [],
-                            comments: [],
-                            createdDate: Date(),
-                            taggedUsers: [user,user,user],
-                            owner: user)
-        for _ in 0...5 {
-            var cls = [commentLikes]()
-            let cl = commentLikes(username: "Amr", commentIdentifier: "")
-            cls.append(cl)
-            var comments = [PostComment]()
-            let comment = PostComment(identifier: "", username: "", text: "nice photo", createdDate: Date(), likes: cls)
-            comments.append(comment)
-            comments.append(comment)
-            comments.append(comment)
-            comments.append(comment)
-            
-            let viewModel = HomeFeedRenderViewModel(header: PostRenderViewModel(renderType: .header(provider: user)),
-                                                    post: PostRenderViewModel(renderType: .primaryContent(provider: post)),
-                                                    actions: PostRenderViewModel(renderType: .actions(provider: "")),
-                                                    comments: PostRenderViewModel(renderType: .comments(comments: comments)))
-            // each object added to the feed renderModels will basically represent a post with 4 renderers for each section (header,post,actions,comments
-            feedRenderModels.append(viewModel)
+        for post in postModels {
+            feedRenderModels.append(HomeFeedRenderViewModel(header: PostRenderViewModel(renderType: .header(provider: post.owner)),
+                                                            post: PostRenderViewModel(renderType: .primaryContent(provider: post)),
+                                                            actions: PostRenderViewModel(renderType: .actions(provider: "")),
+                                                            comments: PostRenderViewModel(renderType: .comments(comments: []))))
+            tableView.reloadData()
         }
     }
     

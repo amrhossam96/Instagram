@@ -62,9 +62,7 @@ class PostViewController: UIViewController {
     
     init(model: UserPost?) {
         self.model = model
-        super.init(nibName: nil, bundle: nil)
-        configureModels()
-        
+        super.init(nibName: nil, bundle: nil)        
     }
     
     private func configureModels() {
@@ -105,6 +103,7 @@ class PostViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         view.backgroundColor = .systemBackground
+        configureModels()
     }
     
     override func viewDidLayoutSubviews() {
@@ -158,6 +157,7 @@ extension PostViewController: UITableViewDelegate, UITableViewDataSource {
         case .primaryContent(let post):
             let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier,
                                                      for: indexPath) as! IGFeedPostTableViewCell
+            cell.configure(with: post)
             
             return cell
             

@@ -14,11 +14,22 @@ class TabbedSearchCollectionViewCell: UICollectionViewCell {
     
     let button: UIButton = {
         let button = UIButton()
-        button.setTitle("tap", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.backgroundColor = .secondarySystemBackground
         return button
     }()
     
+    
+    func configure(with model: ButtonRenderer) {
+        switch model.type {
+        case ButtonType.people:
+            button.setTitle(ButtonType.people.rawValue, for: .normal)
+        case ButtonType.tag:
+            button.setTitle(ButtonType.tag.rawValue, for: .normal)
+        case ButtonType.location:
+            button.setTitle(ButtonType.location.rawValue, for: .normal)
+        }
+    }
     
     
     override init(frame: CGRect) {

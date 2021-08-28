@@ -81,7 +81,7 @@ class PublishPostViewController: UIViewController {
     private func createPostBluePrint(imageUrl: URL) -> UserPost {
         let model = AuthManager.shared
         let name = model.name?.components(separatedBy: " ")
-        let user = User(username: model.username!,
+        let user = User(username: model.username ?? " ",
                         name: (first: name?[0] ?? " ", last: name?[1] ?? " "),
                         profilePhoto: URL(string: "https://www.google.com")!,
                         birthDate: Date(),

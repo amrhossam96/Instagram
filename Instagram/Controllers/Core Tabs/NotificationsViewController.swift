@@ -47,45 +47,13 @@ final class NotificationsViewController: UIViewController {
         navigationItem.title = "Notifications"
         tableView.delegate = self
         tableView.dataSource = self
-        //        view.addSubview(tableView)
         view.addSubview(spinner)
         view.addSubview(tableView)
-        //        spinner.startAnimating()
-        fetchNotifications()
+        addNoNotifications()
+        view.addSubview(noNotificationsView)
         
     }
     
-    private func fetchNotifications() {
-        for x in 0...100 {
-            
-            let user = User(username: "@Amr",
-                            name: (first: "Amr", last: "Hossam"),
-                            profilePhoto: URL(string: "www.google.com)")!,
-                            birthDate: Date(),
-                            gender: .male,
-                            bio: "",
-                            counts: UserCount(followers: 1,
-                                              following: 1,
-                                              posts: 1),
-                            joinedDate: Date())
-            
-            let post = UserPost(identifier: "",
-                                postType: .photo,
-                                thumbnailImage: URL(string: "www.google.com)")!,
-                                postUrl: URL(string: "www.google.com)")!,
-                                caption: nil,
-                                likeCount: [],
-                                comments: [],
-                                createdDate: Date(),
-                                taggedUsers: [user,user,user],
-                                owner: user)
-            
-            let model = UserNotification(type: x % 2 == 0 ? .like(post: post):.follow(state: .not_following),
-                                             text: "Hello world",
-                                             user: user)
-            models.append(model)
-        }
-    }
     
     private func addNoNotifications() {
         tableView.isHidden = true

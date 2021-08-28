@@ -39,6 +39,15 @@ struct UserCount {
     let posts: Int
 }
 
+public enum ButtonType: String {
+    case people = "People"
+    case tag = "Tag"
+    case location = "Location"
+}
+
+public struct ButtonRenderer {
+    var type: ButtonType
+}
 public struct UserPost {
     
     let identifier: String

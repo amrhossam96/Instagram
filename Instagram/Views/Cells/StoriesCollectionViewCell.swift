@@ -16,7 +16,6 @@ class StoriesCollectionViewCell: UICollectionViewCell {
     let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .orange
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = UIColor(red: 0.8863, green: 0, blue: 0.4, alpha: 1.0).cgColor
         imageView.image = #imageLiteral(resourceName: "testImage")

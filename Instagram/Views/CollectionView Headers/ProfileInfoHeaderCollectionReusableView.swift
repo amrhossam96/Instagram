@@ -24,6 +24,7 @@ final class ProfileInfoHeaderCollectionReusableView: UICollectionReusableView {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         imageView.layer.masksToBounds = true
+        imageView.sd_setImage(with: URL(string: "https://scontent.fcai19-2.fna.fbcdn.net/v/t39.30808-6/216948580_3014008168830001_3505515814490728137_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=P-c6ef6jsmYAX_xh4Tx&_nc_ht=scontent.fcai19-2.fna&oh=89c65d44a03f1520e7a028ce9b8abb3a&oe=612DCA11"), completed: nil)
         return imageView
     }()
     

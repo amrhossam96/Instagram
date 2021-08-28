@@ -20,7 +20,7 @@ class IGFeedPostActionsTableViewCell: UITableViewCell {
     static let identifier = "IGFeedPostActionsTableViewCell"
    
     weak var delegate: IGFeedPostActionsTableViewCellDelegate?
-    
+    var liked: Bool = false
     
     private let likeButton: UIButton = {
         let button = UIButton()
@@ -94,6 +94,15 @@ class IGFeedPostActionsTableViewCell: UITableViewCell {
     }
     @objc private func didTapLikeButton(){
         delegate?.didTapLikeButton()
+        liked = !liked
+
+        let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
+        let imageFilled = UIImage(systemName: "heart.fill", withConfiguration: config)
+        let imagehollow = UIImage(systemName: "heart", withConfiguration: config)
+        likeButton.setImage(liked ? imageFilled : imagehollow, for: .normal)
+        let color = UIColor(red: 0.8863, green: 0, blue: 0.4, alpha: 1.0)
+        likeButton.tintColor = liked ? color : .label
+
     }
     
     @objc private func didTapCommentButton(){

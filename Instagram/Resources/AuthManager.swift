@@ -21,14 +21,7 @@ public class AuthManager {
     var phone: String?
     
     public func registerNewUser(username: String, email: String, password: String, completion: @escaping (Bool)->Void) {
-        /*
-         - Check if the username is available
-         - Check if email is Available
-         - Create account
-         - Insert account to database
-         
-         
-         */
+
         DatabaseManager.shared.canCreateNewUser(with: email, username: username) { canCreate in
             if canCreate {
                 Auth.auth().createUser(withEmail: email, password: password) { result, error in

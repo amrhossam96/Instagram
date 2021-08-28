@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
-    private let userPosts = [UserPost]()
+    private var userPosts = [UserPost]()
     
     private var collectionView: UICollectionView?
     
@@ -19,7 +19,7 @@ final class ProfileViewController: UIViewController {
         navigationItem.title = "Profile"
         view.backgroundColor = .systemBackground
         configureNavigationBar()
-        
+        fetchPosts()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
@@ -44,6 +44,14 @@ final class ProfileViewController: UIViewController {
         view.addSubview(collectionView)
     }
     
+    private func fetchPosts() {
+        DatabaseManager.shared.listenForPostsAdded { success, results in
+            if success {
+                self.userPosts = results
+                self.collectionView?.reloadData()
+            }
+        }
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -83,49 +91,24 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         
 //        return userPosts.count
-        return 30
+        return userPosts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-//        let model = userPosts[indexPath.row]
-        
+                
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-
-        
+        cell.configure(with: userPosts[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
-//        let model = userPosts[indexPath.row]
-        // get the model and open post controller
-        let user = User(username: "@Amr",
-                        name: (first: "Amr", last: "Hossam"),
-                        profilePhoto: URL(string: "www.google.com)")!,
-                        birthDate: Date(),
-                        gender: .male,
-                        bio: "",
-                        counts: UserCount(followers: 1,
-                                          following: 1,
-                                          posts: 1),
-                        joinedDate: Date())
-        
-        let post = UserPost(identifier: "",
-                            postType: .photo,
-                            thumbnailImage: URL(string: "www.google.com)")!,
-                            postUrl: URL(string: "www.google.com)")!,
-                            caption: nil,
-                            likeCount: [],
-                            comments: [],
-                            createdDate: Date(),
-                            taggedUsers: [user,user,user],
-                            owner: user)
+        let post = userPosts[indexPath.row]
         let vc = PostViewController(model: post)
         vc.title = post.postType.rawValue
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
-//        let model = userPosts[indexPath.row]
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

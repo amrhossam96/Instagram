@@ -7,6 +7,7 @@
 
 import FirebaseDatabase
 import FirebaseAuth
+import Firebase
 
 public class DatabaseManager {
     static let shared = DatabaseManager()
@@ -51,6 +52,45 @@ public class DatabaseManager {
             }
         }
     }
+    
+    
+    public func listenForPostsAdded(completion: @escaping (Bool, [UserPost]) -> Void) {
+        database.child("posts").observe(DataEventType.value) { (snapshot: DataSnapshot) in
+            guard let snap = snapshot.value else { return }
+            var posts:[UserPost] = [UserPost]()
+            do {
+                let snapedData = snap as! [String: Any]
+                for user in snapedData {
+                   let post = user.value as! [String: Any]
+                    for p in post {
+                        let content = p.value as! [String: Any]
+                        let model = AuthManager.shared
+                        posts.append(UserPost(identifier: content["identifier"] as! String,
+                                 postType: .photo,
+                                 thumbnailImage: URL(string: content["postThumbnail"] as! String)!,
+                                 postUrl: URL(string: "https://www.google.com")!,
+                                 caption: (content["caption"] as! String),
+                                 likeCount: [],
+                                 comments: [],
+                                 createdDate: Date(),
+                                 taggedUsers: [],
+                                 owner: User(username: model.username ?? " ",
+                                             name: (first: "Amr", last: "Hossam"),
+                                             profilePhoto: URL(string: "https://www.google.com")!,
+                                             birthDate: Date(), gender: .male,
+                                             bio: model.bio ?? " ", counts: UserCount(followers: 10, following: 10, posts: 10),
+                                             joinedDate: Date())))
+                    }
+                }
+                completion(true, posts)
+            } catch  {
+                fatalError("")
+            }
+            
+        }
+        
+    }
+    
     
     public func insertNewUser(with email: String, username: String, completion: @escaping (Bool) -> Void) {
         database.child(email.safeDatabaseKey()).setValue(["username": username]) { error, _ in

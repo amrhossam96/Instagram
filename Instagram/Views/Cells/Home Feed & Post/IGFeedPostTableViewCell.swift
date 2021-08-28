@@ -38,32 +38,14 @@ final class IGFeedPostTableViewCell: UITableViewCell {
    
     
     public func configure(with post: UserPost) {
-        // configure the cell
-        
-        
-        postImageView.image = #imageLiteral(resourceName: "testImage")
+        postImageView.sd_setImage(with: post.thumbnailImage, completed: nil)
         return
-        
-        
-//        switch post.postType {
-//        case .photo:
-//            // show iamge
-//            postImageView.sd_setImage(with: post.postUrl, completed: nil)
-//
-//        case .video:
-//            // load and play video
-//            player = AVPlayer(url: post.postUrl)
-//            playerLayer.player = player
-//            playerLayer.player?.volume = .zero
-//            playerLayer.player?.play()
-//
-//        }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         postImageView.image = nil
-        
+
     }
     
     override func layoutSubviews() {

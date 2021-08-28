@@ -221,11 +221,12 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         }
         let image = UIImage(data: data)
         session?.stopRunning()
-        guard var imageView = imageView else {return}
-        imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame = view.bounds
-        view.addSubview(imageView)
+
+
+        let vc = PostEditorViewController()
+        vc.originalImage = image
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
 }
 

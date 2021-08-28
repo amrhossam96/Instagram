@@ -16,7 +16,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
        
-        let imageView = UIImageView(image: UIImage(named: "testImage"))
+        let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -39,11 +39,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         imageView.frame = contentView.bounds
     }
     
-//    
-//    override func prepareForReuse() {
-//        imageView.image = nil
-//    }
-//    
+    
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
+    
     func configure(with model: UserPost) {
         let url = model.thumbnailImage
         imageView.sd_setImage(with: url, completed: nil)

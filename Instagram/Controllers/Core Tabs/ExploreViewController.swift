@@ -10,8 +10,9 @@ import UIKit
 class ExploreViewController: UIViewController {
     
     
-    private var collectionView: UICollectionView?
     
+    private var collectionView: UICollectionView?
+    private var searchButtons = [ButtonRenderer]()
     private var tabbedSearchCollectionView: UICollectionView?
     
     private let dimmedView: UIView = {
@@ -37,6 +38,16 @@ class ExploreViewController: UIViewController {
         configureExploreCollection()
         configureDimmedView()
         configureTabbedSearch()
+        fetchModels()
+    }
+    
+    private func fetchModels() {
+        DatabaseManager.shared.listenForPostsAdded { sucess, results in
+            if sucess {
+                self.models = results
+                self.collectionView?.reloadData()
+            }
+        }
     }
     
     private func configureTabbedSearch() {
@@ -56,6 +67,9 @@ class ExploreViewController: UIViewController {
         tabbedSearchCollectionView.dataSource = self
         tabbedSearchCollectionView.register(TabbedSearchCollectionViewCell.self, forCellWithReuseIdentifier: TabbedSearchCollectionViewCell.identifier)
         view.addSubview(tabbedSearchCollectionView)
+        searchButtons.append(ButtonRenderer(type: .people))
+        searchButtons.append(ButtonRenderer(type: .tag))
+        searchButtons.append(ButtonRenderer(type: .location))
     }
     
     private func configureDimmedView() {
@@ -108,7 +122,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
         if collectionView == tabbedSearchCollectionView {
             return 3
         }
-        return 80
+        return models.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -116,28 +130,7 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
         if collectionView == tabbedSearchCollectionView {
             return
         }
-        //        let model = models[indexPath.row]
-        let user = User(username: "@Amr",
-                        name: (first: "Amr", last: "Hossam"),
-                        profilePhoto: URL(string: "www.google.com)")!,
-                        birthDate: Date(),
-                        gender: .male,
-                        bio: "",
-                        counts: UserCount(followers: 1,
-                                          following: 1,
-                                          posts: 1),
-                        joinedDate: Date())
-        
-        let post = UserPost(identifier: "",
-                            postType: .photo,
-                            thumbnailImage: URL(string: "www.google.com)")!,
-                            postUrl: URL(string: "www.google.com)")!,
-                            caption: nil,
-                            likeCount: [],
-                            comments: [],
-                            createdDate: Date(),
-                            taggedUsers: [user,user,user],
-                            owner: user)
+        let post = models[indexPath.row]
         let vc = PostViewController(model: post)
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.title = post.postType.rawValue
@@ -149,15 +142,14 @@ extension ExploreViewController: UICollectionViewDataSource, UICollectionViewDel
         if collectionView == tabbedSearchCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabbedSearchCollectionViewCell.identifier, for: indexPath) as! TabbedSearchCollectionViewCell
             cell.backgroundColor = .systemBackground
+            cell.configure(with: searchButtons[indexPath.row])
             return cell
         }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath)
                 as? PhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = .brown
-        //        cell.configure(with: )
-        cell.configure(debug: "test")
+        cell.configure(with: models[indexPath.row])
         return cell
     }
     
