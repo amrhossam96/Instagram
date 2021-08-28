@@ -44,6 +44,7 @@ final class NotificationsViewController: UIViewController {
     private var models = [UserNotification]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         navigationItem.title = "Notifications"
         tableView.delegate = self
         tableView.dataSource = self

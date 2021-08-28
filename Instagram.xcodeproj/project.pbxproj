@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1C55E626D9F17B00A8752A /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1C55E526D9F17B00A8752A /* StoriesViewController.swift */; };
 		0A2D299B26D30B26003C3829 /* FiltersCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D299A26D30B26003C3829 /* FiltersCollectionViewCell.swift */; };
 		0A479B4126A5252400A8FE61 /* IGFeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4026A5252400A8FE61 /* IGFeedPostTableViewCell.swift */; };
 		0A479B4426A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A479B4326A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A1C55E526D9F17B00A8752A /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
 		0A2D299A26D30B26003C3829 /* FiltersCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersCollectionViewCell.swift; sourceTree = "<group>"; };
 		0A479B4026A5252400A8FE61 /* IGFeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		0A479B4326A5277A00A8FE61 /* IGFeedPostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGFeedPostHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				0AB85E5C269FF3D500E4D3D4 /* PostEditorViewController.swift */,
 				0AB85E5E269FF40400E4D3D4 /* PublishPostViewController.swift */,
 				0AE5383626CC956F00C8270C /* MainTabBarViewController.swift */,
+				0A1C55E526D9F17B00A8752A /* StoriesViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				0AB85E29269FF05000E4D3D4 /* AppDelegate.swift in Sources */,
 				0AB85E2B269FF05000E4D3D4 /* SceneDelegate.swift in Sources */,
 				0A479B4626A527C700A8FE61 /* IGFeedPostActionsTableViewCell.swift in Sources */,
+				0A1C55E626D9F17B00A8752A /* StoriesViewController.swift in Sources */,
 				0AB85E57269FF36C00E4D3D4 /* ListViewController.swift in Sources */,
 				0AB85E55269FF35400E4D3D4 /* SettingsViewController.swift in Sources */,
 			);

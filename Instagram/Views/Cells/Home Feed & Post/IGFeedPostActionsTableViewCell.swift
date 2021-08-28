@@ -111,12 +111,7 @@ class IGFeedPostActionsTableViewCell: UITableViewCell {
     @objc private func didTapSendButton(){
         delegate?.didTapSendButton()
     }
-   
-    
-    public func configure(with post: UserPost) {
-        // configure the cell
-        
-    }
+ 
     
     override func layoutSubviews() {
         super.layoutSubviews()

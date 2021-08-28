@@ -101,7 +101,7 @@ class HomeViewController: UIViewController {
     private func configureStoriesCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 80, height: 80)
+        layout.itemSize = CGSize(width: 75, height: 75)
         storiesCollectionView = UICollectionView(frame: .zero,
                                                  collectionViewLayout: layout)
         storiesCollectionView?.showsHorizontalScrollIndicator = false
@@ -212,6 +212,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                                                             actions: PostRenderViewModel(renderType: .actions(provider: "")),
                                                             comments: PostRenderViewModel(renderType: .comments(comments: []))))
             tableView.reloadData()
+            storiesCollectionView?.reloadData()
         }
     }
     
@@ -345,7 +346,12 @@ extension HomeViewController: IGFeedPostHeaderTableViewCellDelegate {
 }
 
 
-extension HomeViewController: IGFeedPostActionsTableViewCellDelegate {
+extension HomeViewController: IGFeedPostActionsTableViewCellDelegate{
+
+    
+
+    
+    
     func didTapBookmarkButton() {
         print("bookmark")
     }
@@ -368,18 +374,22 @@ extension HomeViewController: IGFeedPostActionsTableViewCellDelegate {
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return postModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoriesCollectionViewCell.identifier,
                                                       for: indexPath) as! StoriesCollectionViewCell
+        cell.configure(with: postModels[indexPath.row])
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let post = postModels[indexPath.row]
+        let vc = StoriesViewController()
+        vc.model = post
+        present(vc, animated: true, completion: nil)
     }
     
 }

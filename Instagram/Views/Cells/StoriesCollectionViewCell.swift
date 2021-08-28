@@ -9,17 +9,14 @@ import UIKit
 
 
 
-
 class StoriesCollectionViewCell: UICollectionViewCell {
     static let identifier = "StoriesCollectionViewCell"
-    
     let cellImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = UIColor(red: 0.8863, green: 0, blue: 0.4, alpha: 1.0).cgColor
-        imageView.image = #imageLiteral(resourceName: "testImage")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -28,6 +25,11 @@ class StoriesCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
         addSubview(cellImageView)
         
+        
+    }
+    
+    func configure(with model: UserPost) {
+        cellImageView.sd_setImage(with: model.thumbnailImage, completed: nil)
     }
     
     override func layoutSubviews() {
